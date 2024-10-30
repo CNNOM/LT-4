@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
@@ -21,6 +22,8 @@ public class HelloController {
     public Timeline time = new Timeline();
 
     private boolean isPlaying = false;
+    @FXML
+    private Button startStopButton;
 
     @FXML
     private ImageView screen;
@@ -50,7 +53,9 @@ public class HelloController {
     public void toggleAnimation() {
         if (isPlaying) {
             time.pause();
+            startStopButton.setText("⏹");
         } else {
+            startStopButton.setText("▶");
             time.play();
         }
         isPlaying = !isPlaying;
