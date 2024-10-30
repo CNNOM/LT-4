@@ -26,4 +26,9 @@
     <TextField fx:id="delayField" promptText="задержка в миллисекундах" />
     <Button text="Задать задержку " onAction="#updateDelay"/>
 
+    <HBox spacing="10.0" alignment="CENTER">
+        <Button text="Мемы" onAction="#setImgFolder"/>
+        <Button text="Копибары" onAction="#setImg1Folder"/>
+    </HBox>
+
 </VBox>
