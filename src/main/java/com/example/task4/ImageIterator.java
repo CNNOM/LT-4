@@ -19,7 +19,7 @@ public class ImageIterator implements Iterator {
 
     public void setBasePath(String basePath) {
         this.basePath = basePath;
-        current = 0; // Сбрасываем текущий индекс при смене папки
+        current = 0;
         loadImageFiles();
     }
 
