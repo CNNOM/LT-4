@@ -4,22 +4,25 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.DirectoryChooser;
 import javafx.util.Duration;
-import javafx.scene.control.TextField;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import java.io.File;
 
 public class HelloController {
 
-    public ImageIterator iter = new ImageIterator("img", "src/main/resources");
+    public Aggregate aggregate;
+    public Iterator iter;
 
     public Timeline time = new Timeline();
 
     private boolean isPlaying = false;
+
     @FXML
     private Button startStopButton;
 
@@ -29,8 +32,12 @@ public class HelloController {
     @FXML
     private TextField delayField;
 
+    @FXML
+    private Button chooseFolderButton;
+
     public void initialize() {
-        iter.setBasePath("src/main/resources/img");
+        aggregate = new ConcreteAggregate("src/main/resources/img");
+        iter = aggregate.getIterator();
 
         // Установка количества повторений
         time.setCycleCount(Timeline.INDEFINITE);
@@ -43,7 +50,10 @@ public class HelloController {
     private class EvHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent event) {
-            screen.setImage((Image) iter.next());
+            Image image = (Image) iter.next();
+            if (image != null) {
+                screen.setImage(image);
+            }
         }
     }
 
@@ -78,23 +88,32 @@ public class HelloController {
 
     @FXML
     public void next() {
-        screen.setImage((Image) iter.next());
+        Image image = (Image) iter.next();
+        if (image != null) {
+            screen.setImage(image);
+        }
     }
 
     @FXML
-    public void preview(){
-        screen.setImage((Image) iter.preview());
+    public void preview() {
+        Image image = (Image) iter.preview();
+        if (image != null) {
+            screen.setImage(image);
+        }
     }
 
     @FXML
-    public void setImgFolder() {
-        iter.setBasePath("src/main/resources/img");
-        screen.setImage((Image) iter.next()); // Обновляем изображение на экране
-    }
+    public void chooseFolder() {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File selectedDirectory = directoryChooser.showDialog(chooseFolderButton.getScene().getWindow());
 
-    @FXML
-    public void setImg1Folder() {
-        iter.setBasePath("src/main/resources/img1");
-        screen.setImage((Image) iter.next()); // Обновляем изображение на экране
+        if (selectedDirectory != null) {
+            aggregate = new ConcreteAggregate(selectedDirectory.getAbsolutePath());
+            iter = aggregate.getIterator();
+            Image image = (Image) iter.next();
+            if (image != null) {
+                screen.setImage(image);
+            }
+        }
     }
 }

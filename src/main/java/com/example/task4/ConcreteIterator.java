@@ -6,12 +6,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImageIterator implements Iterator {
+public class ConcreteIterator implements Iterator {
     private int current = 0;
     private String basePath;
     private List<File> imageFiles;
 
-    public ImageIterator(String basePath) {
+    public ConcreteIterator(String basePath) {
         this.basePath = basePath;
         this.imageFiles = new ArrayList<>();
         loadImageFiles();
@@ -45,22 +45,23 @@ public class ImageIterator implements Iterator {
 
     @Override
     public boolean hasNext() {
-        return current + 1 < imageFiles.size();
+        return !imageFiles.isEmpty();
     }
 
     @Override
     public Object next() {
-        if (hasNext()) {
-            current++;
-            return getImage(current);
+        if (!imageFiles.isEmpty()) {
+            Image image = getImage(current);
+            current = (current + 1) % imageFiles.size();
+            return image;
         }
         return null;
     }
 
     @Override
     public Object preview() {
-        if (current > 0) {
-            current--;
+        if (!imageFiles.isEmpty()) {
+            current = (current - 1 + imageFiles.size()) % imageFiles.size();
             return getImage(current);
         }
         return null;

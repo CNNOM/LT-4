@@ -18,17 +18,13 @@
     <ImageView fx:id="screen" fitWidth="400" fitHeight="400" preserveRatio="true"/>
 
     <HBox spacing="10.0" alignment="CENTER">
-        <Button text="◀--" onAction="#next"/>
+        <Button text="◀--" onAction="#preview"/>
         <Button fx:id="startStopButton" text="⏯" onAction="#toggleAnimation"/>
-        <Button text="--▶" onAction="#preview"/>
+        <Button text="--▶" onAction="#next"/>
     </HBox>
 
     <TextField fx:id="delayField" promptText="задержка в миллисекундах" />
     <Button text="Задать задержку " onAction="#updateDelay"/>
 
-    <HBox spacing="10.0" alignment="CENTER">
-        <Button text="Мемы" onAction="#setImgFolder"/>
-        <Button text="Копибары" onAction="#setImg1Folder"/>
-    </HBox>
-
+    <Button fx:id="chooseFolderButton" onAction="#chooseFolder" text="Выбрать папку" />
 </VBox>
