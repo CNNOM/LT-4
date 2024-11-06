@@ -1,0 +1,66 @@
+@startuml
+interface com.example.task4.Aggregate {
+~ Iterator getIterator()
+}
+
+class com.example.task4.ImageIterator {
+- int current
+- String basePath
+- List<File> imageFiles
++ void setBasePath(String)
+- void loadImageFiles()
+- Image getImage(int)
++ boolean hasNext()
++ Object next()
++ Object preview()
+}
+
+
+class com.example.task4.HelloController {
++ Aggregate aggregate
++ Iterator iter
++ Timeline time
+- boolean isPlaying
+- Button startStopButton
+- ImageView screen
+- TextField delayField
+- Button chooseFolderButton
++ void initialize()
++ void toggleAnimation()
++ void updateDelay()
+- void updateTimeline(int)
++ void next()
++ void preview()
++ void chooseFolder()
+}
+
+interface com.example.task4.Iterator {
+~ boolean hasNext()
+~ Object next()
+~ Object preview()
+}
+
+class com.example.task4.ConcreteIterator {
+- int current
+- String basePath
+- List<File> imageFiles
++ void setBasePath(String)
+- void loadImageFiles()
+- Image getImage(int)
++ boolean hasNext()
++ Object next()
++ Object preview()
+}
+
+
+class com.example.task4.ConcreteAggregate {
+- String basePath
++ Iterator getIterator()
+}
+
+
+
+com.example.task4.Iterator <|.. com.example.task4.ImageIterator
+com.example.task4.Iterator <|.. com.example.task4.ConcreteIterator
+com.example.task4.Aggregate <|.. com.example.task4.ConcreteAggregate
+@enduml
